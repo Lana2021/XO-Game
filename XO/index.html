@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"> <!--lang atribut služi da browser raspozna koji se jezik koristi 
+                    na stranici koju pravimo. Za hrvatski ce ici "hr", a za engleski "en"-->
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"> <!--koristimo u slučaju ako će aplikacija biti otvorena na Microsoft Edge browseru.-->
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script> <!--defer atributom govorimo browseru da se JS kod zadnji tek učita jer njemu najduže treba.-->
+        <title>Aplikacija X-O</title>
+    </head>
+    <body>
+        <div class="board circle" id="board">
+            <div class="cell" data-cell></div> <!--kraći način za ispis ovih 9 div elemenata: upiši samo .cell*9 i pritisni enter.-->
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+        </div>
+        <div class="winning-message" id="winning-message">
+            <div data-winning-message-text></div>
+            <button id="restartButton">Restart</button>
+        </div>
+    </body>
+</html>

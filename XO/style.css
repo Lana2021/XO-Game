@@ -1,0 +1,153 @@
+*, *::after, *::before {
+    box-sizing: border-box; /*border-box tells the browser to account for any 
+                            border and padding in the values you specify for 
+                            an element's width and height. If you set an 
+                            element's width to 100 pixels, that 100 pixels 
+                            will include any border or padding you added, 
+                            and the content box will shrink to absorb that 
+                            extra width*/
+}
+
+:root {
+    --cell-size: 100px;   /*CSS varijable*/
+    --mark-size: calc(var(--cell-size) * .9); /*izračunava veličinu X i O, jer su oni malo manji unutar ćeije, zapravo mi želimo da ovaj --mark-size bude 90% od --cell-size*/
+}
+
+body {
+    margin:0;   /*miče sve margine sa browsera*/
+}
+
+.board {
+    width: 100vh;   /*ova širina i visina će omogućiti da board zauzme cijeli ekran i onda ćemo lako centrirati elemente*/
+    height: 100vh;
+    margin: auto;   /*bez ovoga mi nije htjelo centrirati*/
+    display: grid; /*layout all itmes inside grid*/
+    justify-content: center; /*board će biti centriran po osima, za to služi ova linija i linija ispod*/
+    align-content: center;  
+    justify-items: center; /*sve unutar board-a će biti centrirano, ova linija i linija ispod*/
+    align-items: center;
+    grid-template-columns: repeat(3, auto); /*grid u 3x3 reda, auto znači da će biti iste veličine kao što smo i naveli ispod u .cell{}*/
+}
+
+.cell {
+    width: var(--cell-size);  /*CSS varijable*/
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n + 1) {   /*uklanjam border oko board-a sa lijeve strane, ćelije (3*1)+1=4,7*/
+    border-left: none;
+}
+
+.cell:nth-child(3n) {
+    border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(7),
+.cell:nth-child(8) {
+    border-bottom: none;
+}
+
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+    background-color: black;
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    background-color: lightgray;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width:calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after  {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}
+
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0 ,0 ,0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem; 
+    flex-direction: column;   
+}
+
+.winning-message button {
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.winning-message.show {
+    display: flex;
+}
